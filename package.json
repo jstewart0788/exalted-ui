@@ -7,6 +7,7 @@
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.1"
   },
+  "proxy":"https://exalted-api.herokuapp.com",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
