@@ -3,11 +3,13 @@ import axios from "axios";
 import "./App.css";
 
 function App() {
-  const [charms, setCharms] = useState();
+  const [charms, setCharms] = useState({});
 
   useEffect(() => {
     async function fetchCharms() {
-      const { data } = await axios.get("/api/v1/charms");
+      const { data } = await axios.get(
+        `${process.env.BASE_ROUTE ? process.env.BASE_ROUTE : ""}/charms`
+      );
       setCharms(data);
     }
     fetchCharms();
