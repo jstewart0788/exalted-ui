@@ -5,7 +5,10 @@
     },
     "proxies": {
       "/api/v1": {
-        "origin": "${SVC_URL}"
+        "target": "${SVC_URL}",
+        "pathRewrite": {
+          "^/api/v1": "/"
+        }
       }
     }
   }

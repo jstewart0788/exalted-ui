@@ -7,9 +7,7 @@ function App() {
 
   useEffect(() => {
     async function fetchCharms() {
-      const { data } = await axios.get(
-        `${process.env.BASE_ROUTE ? process.env.BASE_ROUTE : ""}/charms`
-      );
+      const { data } = await axios.get(`/api/v1/charms`);
       setCharms(data);
     }
     fetchCharms();
