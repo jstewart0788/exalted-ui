@@ -7,7 +7,7 @@ function App() {
 
   useEffect(() => {
     async function fetchCharms() {
-      const { data } = await axios.get(`/api/v1/charms`);
+      const { data } = await axios.get(`/api/charms`);
       setCharms(data);
     }
     fetchCharms();
