@@ -3,12 +3,9 @@
   "routes": {
     "/**": "index.html"
   },
-  "proxy": {
-    "/api": {
-      "target": "${SVC_URL}",
-      "pathRewrite": {
-        "^/api": "/"
-      }
+  "proxies": {
+    "/api/": {
+      "origin": "${SVC_URL}"
     }
   }
 }
