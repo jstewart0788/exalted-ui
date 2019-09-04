@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -11,19 +10,7 @@ import Brightness6TwoTone from "@material-ui/icons/Brightness6TwoTone";
 import LockTwoTone from "@material-ui/icons/LockTwoTone";
 import GamepadTwoTone from "@material-ui/icons/GamepadTwoTone";
 import { NAV_ITEMS } from "../../shared/constants";
-
-const drawerWidth = 240;
-
-const useStyles = makeStyles(theme => ({
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0
-  },
-  drawerPaper: {
-    width: drawerWidth
-  },
-  toolbar: theme.mixins.toolbar
-}));
+import useStyles from "./styles";
 
 const renderIcon = name => {
   switch (name) {
