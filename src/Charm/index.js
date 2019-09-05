@@ -156,7 +156,7 @@ function Charm({ charm, index }) {
         </div>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
-        <div>
+        <div className={classes.charmBody}>
           <Typography display="block" variant="overline">
             <span className={classes.requirementTitle}>Description:</span>
           </Typography>

@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 
-function Navigation() {
-  const [drawerOpen, toggleDrawer] = useState();
+function Navigation({ highestCost, allEffects, allElements }) {
   return (
     <>
       <Header />
-      <Sidebar />
+      <Sidebar
+        highestCost={highestCost}
+        allEffects={allEffects}
+        allElements={allElements}
+      />
     </>
   );
 }

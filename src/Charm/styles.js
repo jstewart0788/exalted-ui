@@ -7,6 +7,9 @@ const useStyles = makeStyles(theme => ({
   requirementTitle: {
     fontWeight: "bold"
   },
+  charmBody: {
+    maxWidth: 800
+  },
   gold: {
     color: theme.palette.secondary.main
   },

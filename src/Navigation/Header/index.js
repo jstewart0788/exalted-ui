@@ -4,7 +4,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
-import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import useStyles from "./styles";
 
@@ -17,10 +16,10 @@ const Header = () => {
         <IconButton
           edge="start"
           className={classes.menuButton}
-          color="inherit"
+          color="secondary"
           aria-label="open drawer"
         >
-          <MenuIcon />
+          <i className="fal fa-dice-d10"/>
         </IconButton>
         <Typography className={classes.title} variant="h6" noWrap>
           Exalted 3e Charm Navigator
