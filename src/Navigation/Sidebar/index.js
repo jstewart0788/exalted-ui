@@ -77,9 +77,8 @@ export default function Sidebar({ highestCost, allEffects, allElements }) {
           <ListItemText primary={"Costs"} />
           {costOpen ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
-      </List>
-      <Collapse in={costOpen} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
+
+        <Collapse in={costOpen} timeout="auto" unmountOnExit>
           <ListItem button className={classes.nestedLarge}>
             <Slider
               classes={{
@@ -96,9 +95,8 @@ export default function Sidebar({ highestCost, allEffects, allElements }) {
               max={highestCost}
             />
           </ListItem>
-        </List>
-      </Collapse>
-      <List>
+        </Collapse>
+
         <ListItem button onClick={handleClick.bind(null, NAV_ITEMS.ELEMENTS)}>
           <ListItemIcon>
             <MonetizationOnTwoTone />
@@ -106,9 +104,8 @@ export default function Sidebar({ highestCost, allEffects, allElements }) {
           <ListItemText primary={"Elements"} />
           {elementsOpen ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
-      </List>
-      <Collapse in={elementsOpen} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
+
+        <Collapse in={elementsOpen} timeout="auto" unmountOnExit>
           <ListItem button className={classes.nested}>
             <FormControl component="fieldset">
               <FormGroup>
@@ -129,9 +126,8 @@ export default function Sidebar({ highestCost, allEffects, allElements }) {
               </FormGroup>
             </FormControl>
           </ListItem>
-        </List>
-      </Collapse>
-      <List>
+        </Collapse>
+
         <ListItem button onClick={handleClick.bind(null, NAV_ITEMS.EFFECTS)}>
           <ListItemIcon>
             <MonetizationOnTwoTone />
@@ -139,9 +135,8 @@ export default function Sidebar({ highestCost, allEffects, allElements }) {
           <ListItemText primary={"Effects"} />
           {effectsOpen ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
-      </List>
-      <Collapse in={effectsOpen} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
+
+        <Collapse in={effectsOpen} timeout="auto" unmountOnExit>
           <ListItem button className={classes.nested}>
             <FormControl component="fieldset">
               <FormGroup>
@@ -162,9 +157,7 @@ export default function Sidebar({ highestCost, allEffects, allElements }) {
               </FormGroup>
             </FormControl>
           </ListItem>
-        </List>
-      </Collapse>
-      <List>
+        </Collapse>
         <ListItem button onClick={handleClick.bind(null, NAV_ITEMS.MINIMUMS)}>
           <ListItemIcon>
             <MonetizationOnTwoTone />
@@ -172,14 +165,12 @@ export default function Sidebar({ highestCost, allEffects, allElements }) {
           <ListItemText primary={"Minimums"} />
           {minsOpen ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
-      </List>
-      <Collapse in={minsOpen} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
+        <Collapse in={minsOpen} timeout="auto" unmountOnExit>
           <ListItem button className={classes.nested}>
             TODO
           </ListItem>
-        </List>
-      </Collapse>
+        </Collapse>
+      </List>
     </Drawer>
   );
 }

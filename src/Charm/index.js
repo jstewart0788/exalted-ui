@@ -146,7 +146,7 @@ function Charm({ charm, index }) {
           {charm.prerequisites.length > 0 && (
             <Typography display="block" variant="overline">
               <span className={classes.requirements}>
-                <span className={classes.requirementTitle}>Prerequisites:</span>
+                <span className={classes.requirementTitle}>Prerequisites:{" "}</span>
                 {charm.prerequisites.map((preReq, index, all) =>
                   index === all.length - 1 ? `${preReq}` : `${preReq}, `
                 )}
