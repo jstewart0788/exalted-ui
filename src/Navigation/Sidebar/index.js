@@ -15,30 +15,62 @@ import MonetizationOnTwoTone from "@material-ui/icons/MonetizationOnTwoTone";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import { NAV_ITEMS } from "../../shared/constants";
+import { CHARM_ACTIONS } from "../../shared/constants";
+import { useCharm } from "../../shared/CharmContext";
 import useStyles from "./styles";
 
-export default function Sidebar({ highestCost, allEffects, allElements }) {
-  const [cost, setCost] = React.useState([0, 10]);
+export default function Sidebar() {
+  const [state, dispatch] = useCharm();
+  const {
+    highestCost,
+    allEffects,
+    allElements,
+    chosenCosts,
+    chosenElements,
+    chosenEffects
+  } = state;
   const [costOpen, toggleCost] = React.useState(false);
   const [elementsOpen, toggleElements] = React.useState(false);
   const [effectsOpen, toggleEffects] = React.useState(false);
   const [minsOpen, toggleMins] = React.useState(false);
-  const [elements, setElementState] = React.useState([]);
-  const [effects, setEffectState] = React.useState([]);
-
-  const handleEffectChange = name => event => {
-    if (event.target.checked) setEffectState([...effects, name]);
-    else setEffectState(_.xor([...effects], [name]));
-  };
-
-  const handleElementChange = name => event => {
-    if (event.target.checked) setElementState([...elements, name]);
-    else setElementState(_.xor([...elements], [name]));
-  };
 
   const classes = useStyles();
-  const handleSetCostState = (event, newValue) => {
-    setCost(newValue);
+
+  const handleFilter = ({ type, value }) => (event, newValue) => {
+    switch (type) {
+      case NAV_ITEMS.EFFECTS:
+        if (event.target.checked)
+          dispatch({
+            type: CHARM_ACTIONS.UPDATE_CHOSEN_EFFECTS,
+            payload: [...chosenEffects, value]
+          });
+        else
+          dispatch({
+            type: CHARM_ACTIONS.UPDATE_CHOSEN_EFFECTS,
+            payload: _.xor([...chosenEffects], [value])
+          });
+        break;
+      case NAV_ITEMS.ELEMENTS:
+        if (event.target.checked)
+          dispatch({
+            type: CHARM_ACTIONS.UPDATE_CHOSEN_ELEMENTS,
+            payload: [...chosenElements, value]
+          });
+        else
+          dispatch({
+            type: CHARM_ACTIONS.UPDATE_CHOSEN_ELEMENTS,
+            payload: _.xor([...chosenElements], [value])
+          });
+        break;
+      case NAV_ITEMS.COSTS:
+        dispatch({
+          type: CHARM_ACTIONS.UPDATE_CHOSEN_COSTS,
+          payload: newValue
+        });
+        break;
+      default:
+        break;
+    }
   };
 
   function handleClick(name) {
@@ -84,8 +116,10 @@ export default function Sidebar({ highestCost, allEffects, allElements }) {
               classes={{
                 root: classes.sliderRoot
               }}
-              value={cost}
-              onChange={handleSetCostState}
+              value={chosenCosts}
+              onChange={handleFilter({
+                type: NAV_ITEMS.COSTS
+              })}
               valueLabelDisplay="on"
               aria-labelledby="range-slider"
               getAriaValueText={value => `${value} motes`}
@@ -114,8 +148,11 @@ export default function Sidebar({ highestCost, allEffects, allElements }) {
                     control={
                       <Checkbox
                         color="primary"
-                        checked={elements.includes(element)}
-                        onChange={handleElementChange(element)}
+                        checked={chosenElements.includes(element)}
+                        onChange={handleFilter({
+                          type: NAV_ITEMS.ELEMENTS,
+                          value: element
+                        })}
                         value={element}
                       />
                     }
@@ -145,8 +182,11 @@ export default function Sidebar({ highestCost, allEffects, allElements }) {
                     control={
                       <Checkbox
                         color="primary"
-                        checked={effects.includes(effect)}
-                        onChange={handleEffectChange(effect)}
+                        checked={chosenEffects.includes(effect)}
+                        onChange={handleFilter({
+                          type: NAV_ITEMS.EFFECTS,
+                          value: effect
+                        })}
                         value={effect}
                       />
                     }

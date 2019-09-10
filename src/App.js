@@ -1,78 +1,42 @@
-import React, { useEffect, useState } from "react";
-import _ from "lodash";
-import { ThemeProvider } from "@material-ui/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import React, { useEffect } from "react";
+import axios from "axios";
 import Charm from "./Charm";
+import Navigation from "./Navigation";
+import { useCharm } from "./shared/CharmContext";
+import { CHARM_ACTIONS } from "./shared/constants";
 import useStyles from "./styles";
 
-import axios from "axios";
-import Navigation from "./Navigation";
-import theme from "./theme";
-
 function App() {
-  const [allIds, setallIds] = useState([]);
-  const [byIds, setbyIds] = useState({});
-  const highestCost = 10;
-  const [allEffects, setAllEffects] = useState([]);
-  const [allElements, setAllElements] = useState([]);
   const classes = useStyles();
+  const [state, dispatch] = useCharm();
+  const {
+    charms: { byIds },
+    visibleCharms
+  } = state;
 
   useEffect(() => {
     async function fetchCharms() {
       // Fetch Claims from API
       const { data } = await axios.get(`/api/charms`);
       // Set Main Charm Structures
-      const byIds = {};
-      const allIds = data.map(charm => {
-        byIds[charm.id] = charm;
-        return charm.id;
-      });
-      setbyIds(byIds);
-      setallIds(allIds);
+      dispatch({ type: CHARM_ACTIONS.UPDATE_CHARMS, payload: data });
     }
     fetchCharms();
-  }, []);
-
-  // Set Meta Values
-  useEffect(() => {
-    let temp = [];
-    allIds.forEach(id => {
-      temp = _.union(temp, byIds[id].effects);
-    });
-    setAllEffects(temp);
-  }, [allIds, byIds]);
-
-  useEffect(() => {
-    let temp = [];
-    allIds.forEach(id => {
-      temp = _.union(temp, byIds[id].elements);
-    });
-    setAllElements(temp);
-  }, [allIds, byIds]);
-
-  console.log("byIds", byIds);
-  console.log("allIds", allIds);
+  }, [dispatch]);
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
-      <ThemeProvider theme={theme}>
-        <Navigation
-          highestCost={highestCost}
-          allEffects={allEffects}
-          allElements={allElements}
-        />
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          {allIds.map((charmId, index) => (
-            <Charm
-              charm={byIds[charmId]}
-              index={index}
-              key={`charm-${byIds[charmId].id}`}
-            />
-          ))}
-        </main>
-      </ThemeProvider>
+      <Navigation />
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        {visibleCharms.map((charmId, index) => (
+          <Charm
+            charm={byIds[charmId]}
+            index={index}
+            key={`charm-${byIds[charmId].id}`}
+          />
+        ))}
+      </main>
     </div>
   );
 }

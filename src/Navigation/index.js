@@ -6,11 +6,7 @@ function Navigation({ highestCost, allEffects, allElements }) {
   return (
     <>
       <Header />
-      <Sidebar
-        highestCost={highestCost}
-        allEffects={allEffects}
-        allElements={allElements}
-      />
+      <Sidebar />
     </>
   );
 }
