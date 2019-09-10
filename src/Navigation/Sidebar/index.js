@@ -14,8 +14,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import MonetizationOnTwoTone from "@material-ui/icons/MonetizationOnTwoTone";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import { NAV_ITEMS } from "../../shared/constants";
-import { CHARM_ACTIONS } from "../../shared/constants";
+import { NAV_ITEMS, CHARM_ACTIONS } from "../../shared/constants";
 import { useCharm } from "../../shared/CharmContext";
 import useStyles from "./styles";
 
