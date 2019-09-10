@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import _ from "lodash";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
@@ -92,125 +92,138 @@ export default function Sidebar() {
     }
   }
 
-  return (
-    <Drawer
-      className={classes.drawer}
-      variant="permanent"
-      classes={{
-        paper: classes.drawerPaper
-      }}
-    >
-      <div className={classes.toolbar} />
-      <List>
-        <ListItem button onClick={handleClick.bind(null, NAV_ITEMS.COSTS)}>
-          <ListItemIcon>
-            <MonetizationOnTwoTone />
-          </ListItemIcon>
-          <ListItemText primary={"Costs"} />
-          {costOpen ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-
-        <Collapse in={costOpen} timeout="auto" unmountOnExit>
-          <ListItem button className={classes.nestedLarge}>
-            <Slider
-              classes={{
-                root: classes.sliderRoot
-              }}
-              value={chosenCosts}
-              onChange={handleFilter({
-                type: NAV_ITEMS.COSTS
-              })}
-              valueLabelDisplay="on"
-              aria-labelledby="range-slider"
-              getAriaValueText={value => `${value} motes`}
-              step={1}
-              marks
-              min={0}
-              max={highestCost}
-            />
+  return useMemo(() => {
+    return (
+      <Drawer
+        className={classes.drawer}
+        variant="permanent"
+        classes={{
+          paper: classes.drawerPaper
+        }}
+      >
+        <div className={classes.toolbar} />
+        <List>
+          <ListItem button onClick={handleClick.bind(null, NAV_ITEMS.COSTS)}>
+            <ListItemIcon>
+              <MonetizationOnTwoTone />
+            </ListItemIcon>
+            <ListItemText primary={"Costs"} />
+            {costOpen ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
-        </Collapse>
 
-        <ListItem button onClick={handleClick.bind(null, NAV_ITEMS.ELEMENTS)}>
-          <ListItemIcon>
-            <MonetizationOnTwoTone />
-          </ListItemIcon>
-          <ListItemText primary={"Elements"} />
-          {elementsOpen ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
+          <Collapse in={costOpen} timeout="auto" unmountOnExit>
+            <ListItem button className={classes.nestedLarge}>
+              <Slider
+                classes={{
+                  root: classes.sliderRoot
+                }}
+                value={chosenCosts}
+                onChange={handleFilter({
+                  type: NAV_ITEMS.COSTS
+                })}
+                valueLabelDisplay="on"
+                aria-labelledby="range-slider"
+                getAriaValueText={value => `${value} motes`}
+                step={1}
+                marks
+                min={0}
+                max={highestCost}
+              />
+            </ListItem>
+          </Collapse>
 
-        <Collapse in={elementsOpen} timeout="auto" unmountOnExit>
-          <ListItem button className={classes.nested}>
-            <FormControl component="fieldset">
-              <FormGroup>
-                {allElements.map(element => (
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        color="primary"
-                        checked={chosenElements.includes(element)}
-                        onChange={handleFilter({
-                          type: NAV_ITEMS.ELEMENTS,
-                          value: element
-                        })}
-                        value={element}
-                      />
-                    }
-                    label={element}
-                    key={`filter-${element}`}
-                  />
-                ))}
-              </FormGroup>
-            </FormControl>
+          <ListItem button onClick={handleClick.bind(null, NAV_ITEMS.ELEMENTS)}>
+            <ListItemIcon>
+              <MonetizationOnTwoTone />
+            </ListItemIcon>
+            <ListItemText primary={"Elements"} />
+            {elementsOpen ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
-        </Collapse>
 
-        <ListItem button onClick={handleClick.bind(null, NAV_ITEMS.EFFECTS)}>
-          <ListItemIcon>
-            <MonetizationOnTwoTone />
-          </ListItemIcon>
-          <ListItemText primary={"Effects"} />
-          {effectsOpen ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
+          <Collapse in={elementsOpen} timeout="auto" unmountOnExit>
+            <ListItem button className={classes.nested}>
+              <FormControl component="fieldset">
+                <FormGroup>
+                  {allElements.map(element => (
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          color="primary"
+                          checked={chosenElements.includes(element)}
+                          onChange={handleFilter({
+                            type: NAV_ITEMS.ELEMENTS,
+                            value: element
+                          })}
+                          value={element}
+                        />
+                      }
+                      label={element}
+                      key={`filter-${element}`}
+                    />
+                  ))}
+                </FormGroup>
+              </FormControl>
+            </ListItem>
+          </Collapse>
 
-        <Collapse in={effectsOpen} timeout="auto" unmountOnExit>
-          <ListItem button className={classes.nested}>
-            <FormControl component="fieldset">
-              <FormGroup>
-                {allEffects.map(effect => (
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        color="primary"
-                        checked={chosenEffects.includes(effect)}
-                        onChange={handleFilter({
-                          type: NAV_ITEMS.EFFECTS,
-                          value: effect
-                        })}
-                        value={effect}
-                      />
-                    }
-                    label={effect}
-                    key={`filter-${effect}`}
-                  />
-                ))}
-              </FormGroup>
-            </FormControl>
+          <ListItem button onClick={handleClick.bind(null, NAV_ITEMS.EFFECTS)}>
+            <ListItemIcon>
+              <MonetizationOnTwoTone />
+            </ListItemIcon>
+            <ListItemText primary={"Effects"} />
+            {effectsOpen ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
-        </Collapse>
-        <ListItem button onClick={handleClick.bind(null, NAV_ITEMS.MINIMUMS)}>
-          <ListItemIcon>
-            <MonetizationOnTwoTone />
-          </ListItemIcon>
-          <ListItemText primary={"Minimums"} />
-          {minsOpen ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={minsOpen} timeout="auto" unmountOnExit>
-          <ListItem button className={classes.nested}>
-            TODO
+
+          <Collapse in={effectsOpen} timeout="auto" unmountOnExit>
+            <ListItem button className={classes.nested}>
+              <FormControl component="fieldset">
+                <FormGroup>
+                  {allEffects.map(effect => (
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          color="primary"
+                          checked={chosenEffects.includes(effect)}
+                          onChange={handleFilter({
+                            type: NAV_ITEMS.EFFECTS,
+                            value: effect
+                          })}
+                          value={effect}
+                        />
+                      }
+                      label={effect}
+                      key={`filter-${effect}`}
+                    />
+                  ))}
+                </FormGroup>
+              </FormControl>
+            </ListItem>
+          </Collapse>
+          <ListItem button onClick={handleClick.bind(null, NAV_ITEMS.MINIMUMS)}>
+            <ListItemIcon>
+              <MonetizationOnTwoTone />
+            </ListItemIcon>
+            <ListItemText primary={"Minimums"} />
+            {minsOpen ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
-        </Collapse>
-      </List>
-    </Drawer>
-  );
+          <Collapse in={minsOpen} timeout="auto" unmountOnExit>
+            <ListItem button className={classes.nested}>
+              TODO
+            </ListItem>
+          </Collapse>
+        </List>
+      </Drawer>
+    );
+  }, [
+    highestCost,
+    allEffects,
+    allElements,
+    chosenCosts,
+    chosenElements,
+    chosenEffects,
+    costOpen,
+    effectsOpen,
+    elementsOpen,
+    minsOpen
+  ]);
 }

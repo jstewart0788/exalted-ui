@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import axios from "axios";
 import Charm from "./Charm";
 import Navigation from "./Navigation";
@@ -24,21 +24,23 @@ function App() {
     fetchCharms();
   }, [dispatch]);
 
-  return (
-    <div className={classes.root}>
-      <Navigation />
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        {visibleCharms.map((charmId, index) => (
-          <Charm
-            charm={byIds[charmId]}
-            index={index}
-            key={`charm-${byIds[charmId].id}`}
-          />
-        ))}
-      </main>
-    </div>
-  );
+  return useMemo(() => {
+    return (
+      <div className={classes.root}>
+        <Navigation />
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          {visibleCharms.map((charmId, index) => (
+            <Charm
+              charm={byIds[charmId]}
+              index={index}
+              key={`charm-${byIds[charmId].id}`}
+            />
+          ))}
+        </main>
+      </div>
+    );
+  }, [byIds, visibleCharms]);
 }
 
 export default App;
